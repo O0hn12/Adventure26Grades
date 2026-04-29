@@ -51,10 +51,14 @@ body {
 
 /* ================= VIDEO (FIXED PROBLEM) ================= */
 #characterVideo {
-  display: block;
-  margin: 10px auto;
-  width: clamp(60px, 20vw, 100px);
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 70px;
   height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 999;
 }
     
 /* ================= TABLE ================= */
@@ -217,8 +221,9 @@ body {
   }
 
   #characterVideo {
-  width: 70px;       /* أصغر بكتير */
-  max-width: 30%;
+  width: 55px;
+  top: 8px;
+  right: 8px;
 }
 
   #classChoices {
