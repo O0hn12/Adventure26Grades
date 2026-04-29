@@ -117,10 +117,15 @@
   }
 
   #characterVideo {
-    width: 120px;   /* صغّر الفيديو علشان ما يغطيش الشاشة */
-    bottom: 10px;
-    right: 10px;
-  }
+  position: fixed;
+  bottom: 10px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 60%;   /* يخلي الفيديو مناسب لشاشة الموبايل */
+  max-width: 300px; /* مايزيدش عن حجم معين */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
 
   .table-report th, .table-report td {
     font-size: 14px;
@@ -210,6 +215,13 @@
 #suggestionsBox div:hover {
   background: #E3F2FD;
 }
+    @media (max-width: 600px) {
+  #characterVideo {
+    width: 80%;
+    max-width: none; /* يخلي الفيديو ياخد معظم الشاشة */
+    bottom: 20px;
+  }
+}
   </style>
 </head>
 <body>
@@ -249,7 +261,7 @@
     const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
 
     document.getElementById("showGradesBtn").addEventListener("click", () => {
-  const cls = document.getElementById("gradeClass").value;
+  const cls = selectedClass; // بياخد الفرقة من الزرار اللي اخترته
   const name = document.getElementById("gradeNameInput").value;
 
   fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}`)
@@ -281,10 +293,18 @@
       i = (i+1) % videos.length;
     }, 10000); // كل 10 ثواني
 
-    document.getElementById("startBtn").addEventListener("click", ()=>{
+  document.getElementById("startBtn").addEventListener("click", ()=>{
   document.getElementById("welcomePage").classList.add("hidden");
   document.getElementById("gradesSection").style.display = "block";
 });
+
+    function loadNames(cls){
+  fetch(`${scriptURL}?action=getNames&class=${cls}&key=${API_KEY}`)
+    .then(res=>res.json())
+    .then(data=>{
+      studentNames = data.names || [];
+    });
+}
 
     let studentNames = [];
 
@@ -302,47 +322,12 @@ function showSuggestions(list){
   });
 }
 
-// ✅ تغيير الفرقة
-document.getElementById("classSelect").addEventListener("change", function(){
-  currentClass = this.value;
-  loadNames(this.value); // 🔥 تحميل الأسماء
-});
-
 // ✅ اقتراحات سريعة (LOCAL)
-document.getElementById("nameInput").addEventListener("input", function(){
-  const value = this.value.trim().toLowerCase();
-  const suggestionsBox = document.getElementById("nameSuggestions");
-  suggestionsBox.innerHTML = "";
-
-  if(!value || allNames.length === 0) return;
-
-  const filtered = allNames.filter(n => n.toLowerCase().includes(value)).slice(0,10);
-
-  filtered.forEach(name=>{
-    const div = document.createElement("div");
-    div.textContent = name;
-    div.style.padding="8px";
-    div.style.cursor="pointer";
-    div.onclick=()=>{
-      document.getElementById("nameInput").value=name;
-      suggestionsBox.innerHTML="";
-    };
-    suggestionsBox.appendChild(div);
-  });
+document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
+  const val = e.target.value.toLowerCase();
+  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val)).slice(0,10);
+  showSuggestions(suggestions);
 });
-
-    
-
-function showSuggestions(list){
-  const box = document.getElementById("suggestionsBox");
-  box.innerHTML = list.map(n=>`<div>${n}</div>`).join("");
-  box.querySelectorAll("div").forEach(div=>{
-    div.addEventListener("click", ()=>{
-      document.getElementById("gradeNameInput").value = div.textContent;
-      box.innerHTML = "";
-    });
-  });
-}
     
     const buttons = document.querySelectorAll(".class-btn");
 buttons.forEach(btn => {
@@ -354,6 +339,6 @@ buttons.forEach(btn => {
   });
 });
 
-  </script>
+</script>
 </body>
 </html>
