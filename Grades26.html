@@ -20,44 +20,39 @@ body {
   color: #333;
   background: url('https://i.ibb.co/v4JFp9Jb/Outdoor-adventure-in-the-countryside.png') no-repeat center center fixed;
   background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ================= SECTION ================= */
 #gradesSection {
-  position: relative;        /* يخليها متجاوبة */
-  width: 90%;
-  margin: 40px auto;         /* يخليها في النص */
-  padding: 20px;
   display: none;
+  width: min(500px, 95%);
+  margin: 40px auto;
+  padding: 20px;
   text-align: center;
-  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;   /* المحتوى في نص الصفحة */
+  justify-content: center;
   gap: 12px;
-}
-
-    @media (max-width: 600px) {
-  #gradesSection {
-    width: 95%;
-    margin: 20px auto;
-    padding: 20px;
-    justify-content: flex-start; /* يبدأ من فوق لكن في النص */
-  }
 }
 
 /* ================= INPUT & BUTTON ================= */
 .input-box {
   width: 100%;
+  max-width: 320px;
   padding: 12px;
-  margin: 10px 0;
+  margin: 8px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
   text-align: center;
+  font-size: 16px;
 }
 
 #showGradesBtn {
   width: 100%;
+  max-width: 320px;
   padding: 12px;
   background: linear-gradient(45deg,#2196F3,#64B5F6);
   color: #fff;
@@ -171,12 +166,17 @@ body {
   font-weight: bold;
   border: none;
   border-radius: 50px;
-  padding: 14px 22px;
-  margin: 8px;
-  font-size: 18px;
+
+  padding: 12px 18px;
+  margin: 6px;
+
+  font-size: 16px;
   cursor: pointer;
+
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: 0.2s;
+
+  min-width: 70px;
 }
 
 .class-btn:hover {
@@ -187,6 +187,14 @@ body {
   background: linear-gradient(45deg, #4CAF50, #81C784);
   color: white;
   box-shadow: 0 0 15px rgba(76,175,80,0.6);
+}
+
+    #classChoices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
 }
 
 /* ================= SUGGESTIONS ================= */
@@ -229,63 +237,28 @@ body {
 
   #gradesSection {
     width: 95%;
+    padding: 15px;
     margin: 20px auto;
-    padding: 20px;
+  }
+
+  .class-btn {
+    font-size: 15px;
+    padding: 10px 14px;
   }
 
   #welcomePage h1 {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   #welcomePage button {
     font-size: 14px;
-    padding: 8px 16px;
-  }
-
-  h2 {
-    font-size: 26px;
-  }
-
-  .class-btn {
-    font-size: 20px;
-    padding: 14px;
-    margin: 6px;
-  }
-
-  #gradeNameInput {
-    font-size: 18px;
-    padding: 14px;
-  }
-
-  #showGradesBtn {
-    font-size: 18px;
-    padding: 14px;
-  }
-
-  .table-report th,
-  .table-report td {
-    font-size: 16px;
-    padding: 10px;
-  }
-
-  #welcomeCharacter {
-    width: 220px;
+    padding: 10px 16px;
   }
 
   #characterVideo {
-    width: 140px;
-    top: 5px;
+    width: 120px;
   }
 
-  #gradesSection {
-    transform: translate(-50%, -45%);
-  }
-
-  #classChoices {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 }
 
 
@@ -327,10 +300,13 @@ body {
   <button class="class-btn">5ب</button>
   <button class="class-btn">6ب</button>
 </div>
-    <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
-    <div id="suggestionsBox"></div>
-    <button id="showGradesBtn">📋 عرض الدرجات</button>
-    <div id="studentGradesDisplay"></div>
+    <div style="position:relative; width:100%; max-width:320px;">
+  <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
+  <div id="suggestionsBox"></div>
+  <button id="showGradesBtn">📋 عرض الدرجات</button>
+</div>
+
+<div id="studentGradesDisplay"></div>
   </section>
 
   <script>
