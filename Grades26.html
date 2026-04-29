@@ -1,156 +1,99 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
   <title>Heroes Adventure - Grades</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      direction: rtl;
-      color: #333;
-      background: url('https://i.ibb.co/v4JFp9Jb/Outdoor-adventure-in-the-countryside.png') no-repeat center center fixed;
-      background-size: cover;
-    }
+body {
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  color: #333;
+  background: url('https://i.ibb.co/v4JFp9Jb/Outdoor-adventure-in-the-countryside.png') no-repeat center center fixed;
+  background-size: cover;
+}
 
-    #gradesSection {
+/* ================= SECTION ================= */
+#gradesSection {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255,255,255,0.0); /* شفاف تمامًا */
-  box-shadow: none; /* يشيل الظل الأبيض */
+  background: rgba(255,255,255,0.0);
+  box-shadow: none;
   border: none;
   text-align: center;
-  display: none; /* علشان مايبانش في البداية */
+  display: none;
+  width: 80%;
 }
 
-    .input-box {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-
-    #showGradesBtn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(45deg,#2196F3,#64B5F6);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #characterVideo {
-  position: fixed;
-  top: 10px;   /* بدل bottom */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  max-width: 30%;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 999;
+/* ================= INPUT & BUTTON ================= */
+.input-box {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
 }
 
-/* للموبايل */
-@media (max-width: 600px) {
-  #characterVideo {
-    width: 150px;
-    max-width: 50%;
-    top: 10px;
-  }
+#showGradesBtn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg,#2196F3,#64B5F6);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-    .table-report {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .table-report th {
-      background: linear-gradient(45deg,#2196F3,#64B5F6);
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    .table-report td {
-      padding: 10px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
-    .table-report tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    /* للشاشات الصغيرة (موبايل) */
-@media (max-width: 600px) {
-
-  #welcomePage h1 {
-    font-size: 28px;
-  }
-
-  #welcomePage button {
-    font-size: 22px;
-    padding: 18px;
-  }
-
-  .class-btn {
-    font-size: 22px;
-    padding: 14px 20px;
-  }
-
-  #gradeNameInput {
-    font-size: 20px;
-    padding: 14px;
-  }
-
-  #showGradesBtn {
-    font-size: 20px;
-    padding: 14px;
-  }
-
-  .table-report th,
-  .table-report td {
-    font-size: 18px;
-  }
-}
-  
-
-  .input-box, #showGradesBtn {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  #characterVideo {
-  position: fixed;
-  bottom: 10px;
-  right: 50%;
-  transform: translateX(50%);
-  width: 60%;   /* يخلي الفيديو مناسب لشاشة الموبايل */
-  max-width: 300px; /* مايزيدش عن حجم معين */
+/* ================= VIDEO (FIXED PROBLEM) ================= */
+#characterVideo {
+  display: block;
+  margin: 10px auto;
+  width: 100px;
+  max-width: 40%;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-  .table-report th, .table-report td {
-    font-size: 14px;
-    padding: 8px;
-  }
-}
-    #studentGradesDisplay {
-  overflow-x: auto;
-}
+/* ================= TABLE ================= */
 .table-report {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   min-width: 300px;
 }
-    #welcomePage {
+
+.table-report th {
+  background: linear-gradient(45deg,#2196F3,#64B5F6);
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.table-report td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.table-report tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#studentGradesDisplay {
+  overflow-x: auto;
+}
+
+/* ================= WELCOME PAGE ================= */
+#welcomePage {
   position: fixed;
   top:0; left:0; right:0; bottom:0;
   background: url('https://i.ibb.co/v4JFp9Jb/Outdoor-adventure-in-the-countryside.png') no-repeat center center fixed;
@@ -184,7 +127,9 @@
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-    .class-btn {
+
+/* ================= CLASS BUTTONS ================= */
+.class-btn {
   background: linear-gradient(45deg, #FFD54F, #FFB300);
   color: #333;
   font-weight: bold;
@@ -207,7 +152,9 @@
   color: white;
   box-shadow: 0 0 15px rgba(76,175,80,0.6);
 }
-    #suggestionsBox {
+
+/* ================= SUGGESTIONS ================= */
+#suggestionsBox {
   position: absolute;
   background: rgba(255,255,255,0.9);
   border-radius: 8px;
@@ -227,14 +174,62 @@
 #suggestionsBox div:hover {
   background: #E3F2FD;
 }
-    @media (max-width: 600px) {
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 600px) {
+
+  #gradesSection {
+    width: 90%;
+    padding: 15px;
+  }
+
+  #welcomePage h1 {
+    font-size: 28px;
+  }
+
+  #welcomePage button {
+    font-size: 22px;
+    padding: 18px;
+  }
+
+  h2 {
+    font-size: 26px;
+  }
+
+  .class-btn {
+    font-size: 20px;
+    padding: 14px;
+    margin: 6px;
+  }
+
+  #gradeNameInput {
+    font-size: 18px;
+    padding: 14px;
+  }
+
+  #showGradesBtn {
+    font-size: 18px;
+    padding: 14px;
+  }
+
+  .table-report th,
+  .table-report td {
+    font-size: 16px;
+    padding: 10px;
+  }
+
   #characterVideo {
-    width: 80%;
-    max-width: none; /* يخلي الفيديو ياخد معظم الشاشة */
-    bottom: 20px;
+    width: 120px;
+    max-width: 50%;
+  }
+
+  #classChoices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
-  </style>
+</style>
 </head>
 <body>
   <!-- صفحة الترحيب -->
