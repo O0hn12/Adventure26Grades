@@ -323,13 +323,18 @@ body {
 
     // تغيير الفيديو كل فترة
     const videos = ["char1.mp4","char2.mp4","char3.mp4"];
-    let i = 0;
-    setInterval(()=>{
-      const video = document.getElementById("characterVideo");
+let i = 0;
 
 setInterval(() => {
+  const video = document.getElementById("characterVideo");
+  if (!video) return;
+
   i = (i + 1) % videos.length;
-  video.src = "videos/" + videos[i];
+
+  const source = video.querySelector("source");
+  source.src = "videos/" + videos[i];
+
+  video.load();
   video.play();
 }, 10000);
 
