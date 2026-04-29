@@ -71,15 +71,22 @@ body {
 /* ================= VIDEO (FIXED PROBLEM) ================= */
 #characterVideo {
   width: clamp(180px, 45vw, 320px);
-  height: auto;
+  aspect-ratio: 1 / 1; /* يثبت الشكل */
+  object-fit: contain;
+
   margin: 10px auto 5px auto;
+
   box-shadow: none;
   border-radius: 0;
   background: transparent;
+
+  display: block;
 }
 
     video {
   max-width: none;
+  will-change: transform;
+  transform: translateZ(0);
 }
     
 /* ================= TABLE ================= */
@@ -273,9 +280,9 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
+  min-height: 200px;
+
+  position: relative;
 }
 
     .input-wrapper {
@@ -384,11 +391,11 @@ setInterval(() => {
 
   i = (i + 1) % videos.length;
 
-  const source = video.querySelector("source");
-  source.src = "videos/" + videos[i];
+  // تغيير المصدر مباشرة بدون load()
+  video.src = "videos/" + videos[i];
 
-  video.load();
-  video.play();
+  // تشغيل سلس
+  video.play().catch(() => {});
 }, 10000);
 
   document.getElementById("startBtn").addEventListener("click", ()=>{
