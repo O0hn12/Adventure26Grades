@@ -53,12 +53,10 @@ body {
 #characterVideo {
   display: block;
   margin: 10px auto;
-  width: 100px;
-  max-width: 40%;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  width: clamp(60px, 20vw, 100px);
+  height: auto;
 }
-
+    
 /* ================= TABLE ================= */
 .table-report {
   width: 100%;
@@ -219,9 +217,9 @@ body {
   }
 
   #characterVideo {
-    width: 120px;
-    max-width: 50%;
-  }
+  width: 70px;       /* أصغر بكتير */
+  max-width: 30%;
+}
 
   #classChoices {
     display: flex;
