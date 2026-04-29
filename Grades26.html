@@ -82,20 +82,26 @@
   #gradesSection, #welcomePage {
     width: 95%;
     margin: 0 auto;
-    padding: 15px;
+    padding: 20px;
   }
 
   .class-btn {
-    font-size: 16px;
-    padding: 10px 18px;
+    font-size: 22px;
+    padding: 14px 24px;
   }
 
-  #gradeNameInput {
-    font-size: 14px;
+  #gradeNameInput, #showGradesBtn {
+    font-size: 18px;
+    padding: 14px;
   }
 
-  #suggestionsBox {
-    max-height: 120px;
+  #welcomePage h1 {
+    font-size: 28px;
+  }
+
+  #welcomePage button {
+    font-size: 20px;
+    padding: 18px 28px;
   }
 }
 
@@ -212,7 +218,7 @@
 
   <!-- مربع عرض الدرجات -->
   <section id="gradesSection">
-    <h2>📊 درجات الطالب</h2>
+    <h2>📊 درجات المغامر</h2>
     <div id="classChoices">
   <button class="class-btn">1ب</button>
   <button class="class-btn">2ب</button>
@@ -222,6 +228,7 @@
   <button class="class-btn">6ب</button>
 </div>
     <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
+<div id="suggestionsBox"></div>
     <button id="showGradesBtn">📋 عرض الدرجات</button>
     <div id="studentGradesDisplay"></div>
   </section>
@@ -235,18 +242,18 @@
     const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
 
     document.getElementById("showGradesBtn").addEventListener("click", () => {
-      const cls = document.getElementById("gradeClass").value;
-      const name = document.getElementById("gradeNameInput").value;
+  const cls = selectedClass; // بدل gradeClass
+  const name = document.getElementById("gradeNameInput").value;
 
-      fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}`)
-        .then(res => res.json())
-        .then(data => {
-          renderGrades(data.grades);
-        })
-        .catch(err => {
-          document.getElementById("studentGradesDisplay").innerHTML = "❌ خطأ في جلب البيانات";
-        });
+  fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}`)
+    .then(res => res.json())
+    .then(data => {
+      renderGrades(data.grades);
+    })
+    .catch(err => {
+      document.getElementById("studentGradesDisplay").innerHTML = "❌ خطأ في جلب البيانات";
     });
+});
 
     function renderGrades(grades) {
       let html = "<table class='table-report'><tr><th>المادة</th><th>الدرجة</th></tr>";
