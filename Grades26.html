@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Heroes Adventure - Grades</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      color: #333;
+      background: url('https://i.ibb.co/v4JFp9Jb/Outdoor-adventure-in-the-countryside.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    #gradesSection {
+      max-width: 500px;
+      margin: 80px auto;
+      background: rgba(255,255,255,0.8);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    #showGradesBtn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg,#2196F3,#64B5F6);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #characterVideo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 200px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .table-report {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .table-report th {
+      background: linear-gradient(45deg,#2196F3,#64B5F6);
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    .table-report td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    .table-report tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    /* للشاشات الصغيرة (موبايل) */
+@media (max-width: 600px) {
+  #gradesSection {
+    max-width: 95%;   /* ياخد تقريبًا عرض الشاشة كله */
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .input-box, #showGradesBtn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  #characterVideo {
+    width: 120px;   /* صغّر الفيديو علشان ما يغطيش الشاشة */
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .table-report th, .table-report td {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+    #studentGradesDisplay {
+  overflow-x: auto;
+}
+.table-report {
+  min-width: 300px;
+}
+  </style>
+</head>
+<body>
+
+  <!-- مربع عرض الدرجات -->
+  <section id="gradesSection">
+    <h2>📊 درجات الطالب</h2>
+    <select id="gradeClass" class="input-box">
+      <option value="">-- اختر الفرقة --</option>
+      <option value="1ب">1ب</option>
+      <option value="2ب">2ب</option>
+      <option value="3ب">3ب</option>
+      <option value="4ب">4ب</option>
+      <option value="5ب">5ب</option>
+      <option value="6ب">6ب</option>
+    </select>
+    <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
+    <button id="showGradesBtn">📋 عرض الدرجات</button>
+    <div id="studentGradesDisplay"></div>
+  </section>
+
+  <!-- فيديو الشخصية -->
+  <video autoplay muted loop id="characterVideo">
+    <source src="videos/char1.mp4" type="video/mp4">
+  </video>
+
+  <script>
+    const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
+
+    document.getElementById("showGradesBtn").addEventListener("click", () => {
+      const cls = document.getElementById("gradeClass").value;
+      const name = document.getElementById("gradeNameInput").value;
+
+      fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}`)
+        .then(res => res.json())
+        .then(data => {
+          renderGrades(data.grades);
+        })
+        .catch(err => {
+          document.getElementById("studentGradesDisplay").innerHTML = "❌ خطأ في جلب البيانات";
+        });
+    });
+
+    function renderGrades(grades) {
+      let html = "<table class='table-report'><tr><th>المادة</th><th>الدرجة</th></tr>";
+      grades.forEach(g => {
+        html += `<tr><td>${g.subject}</td><td>${g.score}</td></tr>`;
+      });
+      html += "</table>";
+      document.getElementById("studentGradesDisplay").innerHTML = html;
+    }
+
+    // تغيير الفيديو كل فترة
+    const videos = ["char1.mp4","char2.mp4","char3.mp4"];
+    let i = 0;
+    setInterval(()=>{
+      const video = document.getElementById("characterVideo");
+      video.querySelector("source").src = "videos/" + videos[i];
+      video.load();
+      i = (i+1) % videos.length;
+    }, 10000); // كل 10 ثواني
+  </script>
+</body>
+</html>
