@@ -46,13 +46,14 @@
     }
 
     #characterVideo {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 200px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 120px;   /* حجم صغير مناسب */
+  max-width: 30%; /* مايزيدش عن 30% من الشاشة */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
 
     .table-report {
       width: 100%;
@@ -261,10 +262,14 @@
     const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
 
     document.getElementById("showGradesBtn").addEventListener("click", () => {
-  const cls = selectedClass; // بياخد الفرقة من الزرار اللي اخترته
+  if(!selectedClass){
+    alert("اختر الفرقة أولاً");
+    return;
+  }
+  const cls = selectedClass;
   const name = document.getElementById("gradeNameInput").value;
 
-  fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}`)
+  fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}&key=${API_KEY}`)
     .then(res => res.json())
     .then(data => {
       renderGrades(data.grades);
@@ -298,7 +303,9 @@
   document.getElementById("gradesSection").style.display = "block";
 });
 
-    function loadNames(cls){
+    let studentNames = [];
+
+function loadNames(cls){
   fetch(`${scriptURL}?action=getNames&class=${cls}&key=${API_KEY}`)
     .then(res=>res.json())
     .then(data=>{
@@ -306,7 +313,11 @@
     });
 }
 
-    let studentNames = [];
+document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
+  const val = e.target.value.toLowerCase();
+  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val)).slice(0,10);
+  showSuggestions(suggestions);
+});
 
 function showSuggestions(list){
   const box = document.getElementById("suggestionsBox");
@@ -321,13 +332,6 @@ function showSuggestions(list){
     box.appendChild(div);
   });
 }
-
-// ✅ اقتراحات سريعة (LOCAL)
-document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
-  const val = e.target.value.toLowerCase();
-  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val)).slice(0,10);
-  showSuggestions(suggestions);
-});
     
     const buttons = document.querySelectorAll(".class-btn");
 buttons.forEach(btn => {
