@@ -1,480 +1,279 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="https://i.ibb.co/FbfJxWvn/logo.png">
-  <title>Heroes Adventure - Grades</title>
-  <style>
-    html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100vh;   /* يخلي الصفحة تاخد طول الشاشة بس لو المحتوى أقل */
-}
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heroes Adventure Scores 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+<style>
 body {
-  margin: 0;
-  font-family: 'Cairo', sans-serif;
-  direction: rtl;
-  color: #333;
-  background: url('https://i.ibb.co/v4JFp9Jb/Outdoor-adventure-in-the-countryside.png') no-repeat center center fixed;
+  font-family: "Tajawal", sans-serif;
+  margin: 0; padding: 0;
+  background: url("https://i.ibb.co/0yZqDqzf/colorful-flat-comic-style-background-free-vector.jpg") no-repeat center center fixed;
   background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
-
-/* ================= SECTION ================= */
-#gradesSection {
-  display: none;
-  width: 95%;
-  max-width: 420px;
-
-  min-height: 100vh;
-  padding: 15px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-
-  box-sizing: border-box;
-}
-
-    #gradesSection h2 {
-  width: 100%;
-  text-align: center;
-  margin: 10px 0 15px;
-  font-size: clamp(20px, 5vw, 28px);
-  font-weight: bold;
-}
-
-/* ================= INPUT & BUTTON ================= */
-.input-box {
-  width: 100%;
-  max-width: 320px;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  text-align: center;
-  font-size: 16px;
-}
-
-#showGradesBtn {
-  width: 100%;
-  max-width: 320px;
-  padding: 12px;
-  background: linear-gradient(45deg,#2196F3,#64B5F6);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-/* ================= VIDEO (FIXED PROBLEM) ================= */
-#characterVideo {
-  width: clamp(180px, 45vw, 320px);
-  aspect-ratio: 1 / 1; /* يثبت الشكل */
-  object-fit: contain;
-
-  margin: 10px auto 5px auto;
-
-  box-shadow: none;
-  border-radius: 0;
-  background: transparent;
-
-  display: block;
-}
-
-    video {
-  max-width: none;
-  will-change: transform;
-  transform: translateZ(0);
-}
-    
-/* ================= TABLE ================= */
-.table-report {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(6px);
-
-  border-radius: 12px;
+  display: flex; justify-content: center; align-items: center;
+  height: 100vh; flex-direction: column;
   overflow: hidden;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  min-width: 300px;
 }
-
-.table-report th {
-  background: linear-gradient(45deg, #2E7D32, #66BB6A);
-  color: white;
-  padding: 12px;
+@keyframes gradientBG {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+#welcome, #pointsPage {
+  display: none;
   text-align: center;
-  font-size: 15px;
-}
-
-.table-report td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-  color: #1f1f1f;
-  font-size: 14px;
-}
-
-.table-report tr:nth-child(even) {
-  background-color: rgba(0,0,0,0.03);
-}
-
-#studentGradesDisplay {
-  overflow-x: auto;
-}
-
-/* ================= WELCOME PAGE ================= */
-#welcomePage {
-  position: fixed;
-  top:0; left:0; right:0; bottom:0;
-  background: url('https://i.ibb.co/v4JFp9Jb/Outdoor-adventure-in-the-countryside.png') no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  transition: opacity 1s ease;
-}
-
-#welcomePage.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#welcomePage h1 {
-  font-size: clamp(22px, 5vw, 40px);
-  margin: 15px 0;
-  color: white;
-  text-shadow: 
-    0 2px 4px rgba(0,0,0,0.8),
-    0 0 10px rgba(0,0,0,0.6);
-  padding: 14px 20px;
-  border-radius: 12px;
-  background: rgba(0,0,0,0.25);
-  text-align: center;
-}
-
-#welcomePage button {
-  font-size: clamp(16px, 3.5vw, 22px);
-  padding: 16px 28px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(45deg,#FF9800,#FFC107);
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transform: scale(1.1);
-}
-
-    #welcomeCharacter {
-  width: clamp(180px, 45vw, 320px);
-  height: auto;
-  display: block;
-  margin: 10px auto;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  background: transparent;
-}
-    
-/* ================= CLASS BUTTONS ================= */
-#classChoices {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-  max-width: 320px;
-  margin: 10px auto;
-  justify-items: center;
-}
-
-.class-btn {
-  width: 100%;
-  padding: 14px 0;
-  font-size: 16px;
-  font-weight: bold;
-
-  border: none;
-  border-radius: 14px;
-
-  cursor: pointer;
-
-  background: linear-gradient(145deg, #FFD54F, #FFB300);
-  color: #333;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.class-btn:hover {
-  transform: scale(1.05);
-}
-
-.class-btn.selected {
-  background: linear-gradient(145deg, #4CAF50, #81C784);
-  color: white;
-  box-shadow: 0 0 18px rgba(76,175,80,0.6);
-  transform: scale(1.05);
-}
-
-/* ================= SUGGESTIONS ================= */
-#suggestionsBox {
-  position: absolute;
-  background: rgba(255,255,255,0.9);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  width: 100%;
-  max-height: 150px;
-  overflow-y: auto;
+  position: relative;
   z-index: 10;
 }
-
-#suggestionsBox div {
-  padding: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
+h1 { font-size: 2.4em; color: #2d3436; text-shadow: 2px 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+button {
+  background: linear-gradient(45deg, #fd79a8, #e84393);
+  color: white; border: none;
+  padding: 14px 28px; border-radius: 12px; cursor: pointer;
+  font-size: 1.2em; transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-#suggestionsBox div:hover {
-  background: #E3F2FD;
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
-
-    .character-wrap{
-  display:flex;
-  justify-content:center;
-  margin-bottom: 5px;
-}
-
-/* ================= MOBILE FIX ================= */
-@media (max-width: 600px) {
-
-  #gradesSection {
-    width: 95%;
-    padding: 15px;
-    margin: 20px auto;
-  }
-
-  .class-btn {
-    font-size: 15px;
-    padding: 10px 14px;
-  }
-
-  #welcomePage h1 {
-    font-size: 16px;
-  }
-
-  #welcomePage button {
-    font-size: 14px;
-    padding: 10px 16px;
-  }
-
-  #characterVideo,
-#welcomeCharacter {
-  width: min(70vw, 260px);
-  height: auto;
-}
-
-}
-
-
-    .top-character,
-.character-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 200px;
-
-  position: relative;
-}
-
-    .input-wrapper {
-  width: 100%;
-  max-width: 320px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-
-  margin-top: 10px;
-}
-
-      * {
+.container {
+  background: rgba(0, 0, 255, 0.12); /* أزرق شفاف */
+  border: 2px solid #e84393;
+  padding: 28px 22px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  width: 95%; max-width: 480px;
+  margin-top: 20px; /* يخلي المربع تحت زيزو بشكل طبيعي */
   box-sizing: border-box;
-  max-width: 100%;
+  z-index: 2;
+  position: relative; /* مش absolute علشان يبان على الموبايل */
+}
+input {
+  width: 100%; padding: 18px; /* كبر البادينج */
+  border: 1px solid #ccc; border-radius: 14px;
+  font-size: 1.3em; /* كبر الخط */
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+.suggestions {
+  background: #fff; border-radius: 12px; border: 1px solid #ddd;
+  max-height: 150px; overflow-y: auto;
+}
+.suggestions div {
+  padding: 10px; cursor: pointer; transition: background 0.3s ease;
+  font-size: 1em;
+}
+.suggestions div:hover { background: #dfe6e9; }
+#result {
+  background: #f1f2f6;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 1.2em;
+  color: #2d3436;
+  transition: opacity 0.5s ease;
+}
+
+/* شخصية زيزو */
+#zizo-container {
+  position: fixed;
+  top: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50vw;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.95;
+}
+@keyframes rise{
+  0%{transform:translateY(110vh) scale(0.8); opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(-20vh) scale(1.2); opacity:0}
 }
 </style>
 </head>
-<body>
-  <!-- صفحة الترحيب -->
-<section id="welcomePage">
-  <div class="character-wrap">
-  <video autoplay muted loop id="welcomeCharacter">
-    <source src="videos/hi.mp4" type="video/mp4">
-  </video>
+<body>  
+<!-- الصفحة الترحيبية -->
+<div id="welcome">
+  <h1>🎯 أهلاً بك 🎯</h1>
+  <button onclick="goToPoints()">شوف نقاطك ⭐</button>
 </div>
-  <h1>👋 أهلاً بك في Heroes Adventure</h1>
-  <button id="startBtn">اعرف درجتك</button>
+
+  <section id="classPage" style="display:none;">
+  <h2>📚 اختر الفرقة</h2>
+
+  <select id="classSelect">
+    <option value="">-- اختر --</option>
+    <option value="1ب">1ب</option>
+    <option value="2ب">2ب</option>
+    <option value="3ب">3ب</option>
+    <option value="4ب">4ب</option>
+    <option value="5ب">5ب</option>
+    <option value="6ب">6ب</option>
+  </select>
+
+  <button id="goToGrades">التالي ➡️</button>
 </section>
+  
+<!-- صفحة عرض النقاط -->
+<div id="pointsPage">
+  <div class="container">
+    <h2>شوف نقاطك ⭐</h2>
+    <input id="nameInput" placeholder="اكتب اسمك هنا">
+    <div class="suggestions" id="suggestions"></div>
+    <button onclick="getPoints()">اعرض النتيجة</button>
+    <div id="result"></div>
+  </div>
+</div>
 
-  <!-- مربع عرض الدرجات -->
-  <section id="gradesSection">
-  <div class="top-character">
-  <video autoplay muted loop playsinline preload="metadata" id="characterVideo">
-    <source src="videos/char1.mp4" type="video/mp4">
+<!-- شخصية زيزو -->
+<div id="zizo-container">
+  <video id="zizo-video" autoplay loop muted playsinline style="width:100%; height:100%;">
+    <source src="videos/zizo-wave.mp4" type="video/mp4">
   </video>
 </div>
+<script>
+const API_KEY = "123456";
+const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
+let allNames = [];
 
-  <h2>📊 درجات المغامر</h2>
-    <div id="classChoices">
-  <button class="class-btn">1ب</button>
-  <button class="class-btn">2ب</button>
-  <button class="class-btn">3ب</button>
-  <button class="class-btn">4ب</button>
-  <button class="class-btn">5ب</button>
-  <button class="class-btn">6ب</button>
-</div>
-    <div class="input-wrapper">
-  <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
-  <div id="suggestionsBox"></div>
-  <button id="showGradesBtn">📋 عرض الدرجات</button>
-</div>
+// تشغيل أول صفحة
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("welcome").style.display = "block";
+  loadNames();
+  generateBubbles();
+});
 
-<div id="studentGradesDisplay"></div>
-  </section>
+async function loadNames() {
+  try {
+    const selectedClass = document.getElementById("classSelect").value; // 👈 مهم
 
-  <script>
-    const API_KEY = "123456";
-    const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
-    let selectedClass = "";
+    const res = await fetch(
+      apiURL + `?action=getStudentNames&sheet=Grades&class=${selectedClass}`
+    );
 
-    document.getElementById("showGradesBtn").addEventListener("click", () => {
-  if(!selectedClass){
-    alert("اختر الفرقة أولاً");
+    const data = await res.json();
+
+    if (data.success) {
+      allNames = data.names || [];
+      console.log("✅ Loaded Names:", allNames);
+    } else {
+      console.error("⚠️ API Error:", data);
+    }
+
+  } catch (err) {
+    console.error("❌ خطأ في تحميل الأسماء", err);
+  }
+}
+
+// اقتراح الأسماء + حالة التفكير
+const nameInput = document.getElementById("nameInput");
+let isThinking = false; // فلَاج علشان نتحكم في تشغيل الفيديو
+
+nameInput.addEventListener("input", () => {
+  const val = nameInput.value.trim();
+  const box = document.getElementById("suggestions");
+  box.innerHTML = "";
+
+  if (val && !isThinking) {
+    setZizoState("think"); // زيزو يبدأ الكتابة مرة واحدة
+    isThinking = true;
+  }
+
+  if (!val) {
+    isThinking = false; // لو رجع فاضي نرجع الفلَاج
     return;
   }
-  const cls = selectedClass;
-  const name = document.getElementById("gradeNameInput").value;
 
-  fetch(`${scriptURL}?action=getStudentGrades&sheet=Grades&class=${cls}&name=${name}`)
-  .then(res => res.json())
-  .then(data => {
-    renderGrades(data);
-  })
-  .catch(err => {
-    console.error(err);
-    document.getElementById("studentGradesDisplay").innerHTML = "❌ خطأ في جلب البيانات";
-  });
-});
-
-    function renderGrades(data) {
-    setVideo("char3.mp4"); // 👈 هنا
-  let html = `
-    <div style="
-      text-align:center;
-      font-size:18px;
-      font-weight:bold;
-      margin:10px 0;
-      color:#ffffff;
-      text-shadow:0 2px 4px rgba(0,0,0,0.6);
-    ">
-      👤 ${data.name || "المغامر"}
-    </div>
-
-    <table class='table-report'>
-      <tr><th>البند</th><th>القيمة</th></tr>
-      <tr><td>الحضور</td><td>${data.attendance}</td></tr>
-      <tr><td>الواجب</td><td>${data.homework}</td></tr>
-      <tr><td>التفاعل</td><td>${data.reaction}</td></tr>
-      <tr><td>السلوك</td><td>${data.behavior}</td></tr>
-      <tr><td>الخصم</td><td>${data.minus}</td></tr>
-      <tr><td>الإجمالي</td><td>${data.total}</td></tr>
-    </table>
-  `;
-
-  document.getElementById("studentGradesDisplay").innerHTML = html;
-}
-
-    // تغيير الفيديو كل فترة
-    const videos = ["char1.mp4","char2.mp4","char3.mp4"];
-let i = 0;
-
-const video = document.getElementById("characterVideo");
-
-function setVideo(src) {
-  if (!video) return;
-  video.src = "videos/" + src;
-  video.play().catch(()=>{});
-}
-
-// 1) أول ما الصفحة تفتح
-setVideo("char1.mp4");
-    
-  document.getElementById("startBtn").addEventListener("click", ()=>{
-  document.getElementById("welcomePage").classList.add("hidden");
-  document.getElementById("gradesSection").style.display = "block";
-});
-
-    let studentNames = [];
-
-function loadNames(cls){
-  fetch(`${scriptURL}?action=getStudentNames&sheet=Grades&class=${cls}`)
-    .then(res=>res.json())
-    .then(data=>{
-      studentNames = data.names || [];
-    });
-}
-
-document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
-  const val = e.target.value;
-
-  // أول كتابة
-  if (val.length === 1) {
-    setVideo("char2.mp4");
-  }
-
-  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val.toLowerCase())).slice(0,10);
-  showSuggestions(suggestions);
-});
-
-function showSuggestions(list){
-  const box = document.getElementById("suggestionsBox");
-  box.innerHTML = "";
-  list.forEach(name=>{
+  const matches = allNames.filter(n => n.includes(val)).slice(0,5);
+  matches.forEach(name => {
     const div = document.createElement("div");
     div.textContent = name;
-    div.onclick = ()=>{
-      document.getElementById("gradeNameInput").value = name;
-      box.innerHTML = "";
-    };
+    div.onclick = () => { nameInput.value = name; box.innerHTML = ""; };
     box.appendChild(div);
   });
+});
+
+// الانتقال لصفحة النقاط + حالة الاستعداد
+async function getPoints() {
+  const name = nameInput.value.trim();
+  const resultBox = document.getElementById("result");
+
+  if (!allNames.includes(name)) {
+    resultBox.innerText = "❌ الاسم غير مسجل";
+    setZizoState("sad");
+    return;
+  }
+
+  // هات earned و minus من الـ API
+  const res = await fetch(apiURL + "?name=" + encodeURIComponent(name));
+  const data = await res.json();
+  if (data.error) {
+    resultBox.innerText = data.error;
+    setZizoState("sad");
+    return;
+  }
+
+  // 🟢 هات بيانات الهدايا من ورقة Feria
+  const feriaRes = await fetch(apiURL + "?type=feriaAll&name=" + encodeURIComponent(name));
+const feriaData = await feriaRes.json();
+console.log("FULL FERIA RESPONSE:", feriaData);
+
+// هنا نستخدم القيم الجاهزة من الـ API بدل ما نحسب من feriaRows
+const earned = Number(feriaData.total || 0);
+const used   = Number(feriaData.used || 0);
+const minus  = Number(feriaData.minus || 0);
+const final  = Number(feriaData.final || (earned - used - minus));
+
+// 🟢 اعرض النتيجة
+resultBox.style.opacity = 0;
+setTimeout(() => {
+  resultBox.innerHTML = `
+    👤 الاسم: ${feriaData.name}<br>
+    ⭐ النقاط الكلية: ${earned}<br>
+    🎁 النقاط المستخدمة: ${used}<br>
+    ➖ النقاط المخصومة: ${minus}<br>
+    🏆 <strong>المحصلة النهائية: ${final}</strong>
+  `;
+  resultBox.style.opacity = 1;
+  setZizoState("win");
+  isThinking = false;
+}, 200);
+  }
+
+// دالة تغيير حالة زيزو
+function setZizoState(state) {
+  const video = document.getElementById("zizo-video");
+  video.src = "videos/zizo-" + state + ".mp4";
+  video.load();
+  video.play();
 }
-    
-    const buttons = document.querySelectorAll(".class-btn");
-buttons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    buttons.forEach(b => b.classList.remove("selected"));
-    btn.classList.add("selected");
-    selectedClass = btn.textContent;
-    loadNames(selectedClass); // تحميل أسماء الطلبة للفرقة دي
-  });
+
+  function goToPoints() {
+  setZizoState("ready");
+
+  document.getElementById("welcome").style.display = "none";
+  document.getElementById("classPage").style.display = "block";
+}
+
+  let selectedClass = "";
+
+document.getElementById("goToGrades").addEventListener("click", () => {
+  const cls = document.getElementById("classSelect").value;
+
+  if (!cls) {
+    alert("اختار الفرقة الأول");
+    return;
+  }
+
+  selectedClass = cls;
+
+  document.getElementById("classPage").style.display = "none";
+  document.getElementById("pointsPage").style.display = "block";
+
+  loadNames(); // 🔥 يحمل الأسماء بعد اختيار الفرقة
 });
 
 </script>
