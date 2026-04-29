@@ -32,6 +32,8 @@ body {
   margin: 40px auto;
   padding: 20px;
   text-align: center;
+
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -64,12 +66,12 @@ body {
 
 /* ================= VIDEO (FIXED PROBLEM) ================= */
 #characterVideo {
-  display: block;
-  margin: 10px auto 5px auto;
-  width: clamp(120px, 30vw, 180px);
+  width: clamp(180px, 45vw, 320px);
   height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  margin: 10px auto 5px auto;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
 }
 
     video {
@@ -129,34 +131,38 @@ body {
 }
 
 #welcomePage h1 {
-  font-size: 20px;
+  font-size: clamp(22px, 5vw, 40px);
   margin: 15px 0;
   color: white;
   text-shadow: 
     0 2px 4px rgba(0,0,0,0.8),
     0 0 10px rgba(0,0,0,0.6);
-  padding: 10px 15px;
+  padding: 14px 20px;
   border-radius: 12px;
   background: rgba(0,0,0,0.25);
+  text-align: center;
 }
 
 #welcomePage button {
-  padding: 15px 25px;
-  font-size: 18px;
+  font-size: clamp(16px, 3.5vw, 22px);
+  padding: 16px 28px;
   border: none;
   border-radius: 12px;
   background: linear-gradient(45deg,#FF9800,#FFC107);
   color: white;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: scale(1.1);
 }
 
     #welcomeCharacter {
-  width: clamp(140px, 35vw, 260px);
+  width: clamp(180px, 45vw, 320px);
   height: auto;
   display: block;
   margin: 10px auto;
-  border-radius: 12px;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  background: transparent;
 }
     
 /* ================= CLASS BUTTONS ================= */
@@ -225,13 +231,6 @@ body {
   margin-bottom: 5px;
 }
 
-#characterVideo{
-  width: 160px;
-  max-width: 45vw;
-  height: auto;
-  border-radius: 12px;
-}
-
 /* ================= MOBILE FIX ================= */
 @media (max-width: 600px) {
 
@@ -268,6 +267,21 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+    .input-wrapper {
+  width: 100%;
+  max-width: 320px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 10px;
 }
 </style>
 </head>
@@ -300,7 +314,7 @@ body {
   <button class="class-btn">5ب</button>
   <button class="class-btn">6ب</button>
 </div>
-    <div style="position:relative; width:100%; max-width:320px;">
+    <div class="input-wrapper">
   <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
   <div id="suggestionsBox"></div>
   <button id="showGradesBtn">📋 عرض الدرجات</button>
