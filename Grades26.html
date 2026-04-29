@@ -47,12 +47,23 @@
 
     #characterVideo {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  width: 120px;   /* حجم صغير مناسب */
-  max-width: 30%; /* مايزيدش عن 30% من الشاشة */
+  top: 10px;   /* بدل bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  max-width: 30%;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 999;
+}
+
+/* للموبايل */
+@media (max-width: 600px) {
+  #characterVideo {
+    width: 150px;
+    max-width: 50%;
+    top: 10px;
+  }
 }
 
     .table-report {
@@ -80,35 +91,35 @@
     }
     /* للشاشات الصغيرة (موبايل) */
 @media (max-width: 600px) {
-  #gradesSection, #welcomePage {
-    width: 95%;
-    margin: 0 auto;
-    padding: 25px;
+
+  #welcomePage h1 {
+    font-size: 28px;
+  }
+
+  #welcomePage button {
+    font-size: 22px;
+    padding: 18px;
   }
 
   .class-btn {
-  font-size: 24px;   /* أكبر */
-  padding: 16px 26px;
-  margin: 12px;
-}
+    font-size: 22px;
+    padding: 14px 20px;
+  }
 
-#gradeNameInput, #showGradesBtn {
-  font-size: 20px;
-  padding: 16px;
-}
+  #gradeNameInput {
+    font-size: 20px;
+    padding: 14px;
+  }
 
-#welcomePage h1 {
-  font-size: 32px;
-}
+  #showGradesBtn {
+    font-size: 20px;
+    padding: 14px;
+  }
 
-#welcomePage button {
-  font-size: 22px;
-  padding: 20px 30px;
-}
-
-.table-report th, .table-report td {
-  font-size: 18px;
-  padding: 10px;
+  .table-report th,
+  .table-report td {
+    font-size: 18px;
+  }
 }
   
 
@@ -237,7 +248,11 @@
 
   <!-- مربع عرض الدرجات -->
   <section id="gradesSection">
-    <h2>📊 درجات المغامر</h2>
+  <video autoplay muted loop id="characterVideo">
+    <source src="videos/char1.mp4" type="video/mp4">
+  </video>
+
+  <h2>📊 درجات المغامر</h2>
     <div id="classChoices">
   <button class="class-btn">1ب</button>
   <button class="class-btn">2ب</button>
@@ -252,14 +267,10 @@
     <div id="studentGradesDisplay"></div>
   </section>
 
-  <!-- فيديو الشخصية -->
-  <video autoplay muted loop id="characterVideo">
-    <source src="videos/char1.mp4" type="video/mp4">
-  </video>
-
   <script>
     const API_KEY = "123456";
     const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
+    let selectedClass = "";
 
     document.getElementById("showGradesBtn").addEventListener("click", () => {
   if(!selectedClass){
@@ -269,24 +280,32 @@
   const cls = selectedClass;
   const name = document.getElementById("gradeNameInput").value;
 
-  fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}&key=${API_KEY}`)
-    .then(res => res.json())
-    .then(data => {
-      renderGrades(data.grades);
-    })
-    .catch(err => {
-      document.getElementById("studentGradesDisplay").innerHTML = "❌ خطأ في جلب البيانات";
-    });
+  fetch(`${scriptURL}?action=getStudentGrades&sheet=Grades&class=${cls}&name=${name}`)
+  .then(res => res.json())
+  .then(data => {
+    renderGrades(data);
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("studentGradesDisplay").innerHTML = "❌ خطأ في جلب البيانات";
+  });
 });
 
-    function renderGrades(grades) {
-      let html = "<table class='table-report'><tr><th>المادة</th><th>الدرجة</th></tr>";
-      grades.forEach(g => {
-        html += `<tr><td>${g.subject}</td><td>${g.score}</td></tr>`;
-      });
-      html += "</table>";
-      document.getElementById("studentGradesDisplay").innerHTML = html;
-    }
+    function renderGrades(data) {
+  let html = `
+    <table class='table-report'>
+      <tr><th>البند</th><th>القيمة</th></tr>
+      <tr><td>الحضور</td><td>${data.attendance}</td></tr>
+      <tr><td>الواجب</td><td>${data.homework}</td></tr>
+      <tr><td>التفاعل</td><td>${data.reaction}</td></tr>
+      <tr><td>السلوك</td><td>${data.behavior}</td></tr>
+      <tr><td>الخصم</td><td>${data.minus}</td></tr>
+      <tr><td>الإجمالي</td><td>${data.total}</td></tr>
+    </table>
+  `;
+
+  document.getElementById("studentGradesDisplay").innerHTML = html;
+}
 
     // تغيير الفيديو كل فترة
     const videos = ["char1.mp4","char2.mp4","char3.mp4"];
@@ -306,7 +325,7 @@
     let studentNames = [];
 
 function loadNames(cls){
-  fetch(`${scriptURL}?action=getNames&class=${cls}&key=${API_KEY}`)
+  fetch(`${scriptURL}?action=getStudentNames&sheet=Grades&class=${cls}`)
     .then(res=>res.json())
     .then(data=>{
       studentNames = data.names || [];
