@@ -113,6 +113,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
   transition: opacity 1s ease;
 }
 
@@ -120,9 +121,35 @@
   opacity: 0;
   pointer-events: none;
 }
+
+#welcomePage h1 {
+  font-size: 24px;
+  margin: 20px 0;
+  color: #1976D2;
+}
+
+#welcomePage button {
+  padding: 15px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(45deg,#FF9800,#FFC107);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
   </style>
 </head>
 <body>
+  <!-- صفحة الترحيب -->
+<section id="welcomePage">
+  <video autoplay muted loop id="welcomeCharacter">
+    <source src="videos/hi.mp4" type="video/mp4">
+  </video>
+  <h1>👋 أهلاً بك في Heroes Adventure</h1>
+  <button id="startBtn">اعرف درجتك</button>
+</section>
+
   <!-- مربع عرض الدرجات -->
   <section id="gradesSection">
     <h2>📊 درجات الطالب</h2>
