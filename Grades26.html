@@ -384,6 +384,7 @@ body {
 });
 
     function renderGrades(data) {
+    setVideo("char3.mp4"); // 👈 هنا
   let html = `
     <div style="
       text-align:center;
@@ -416,13 +417,14 @@ let i = 0;
 
 const video = document.getElementById("characterVideo");
 
-if (window.innerWidth > 600) {
-  setInterval(() => {
-    i = (i + 1) % videos.length;
-    video.src = "videos/" + videos[i];
-    video.play().catch(()=>{});
-  }, 10000);
+function setVideo(src) {
+  if (!video) return;
+  video.src = "videos/" + src;
+  video.play().catch(()=>{});
 }
+
+// 1) أول ما الصفحة تفتح
+setVideo("char1.mp4");
     
   document.getElementById("startBtn").addEventListener("click", ()=>{
   document.getElementById("welcomePage").classList.add("hidden");
@@ -440,8 +442,14 @@ function loadNames(cls){
 }
 
 document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
-  const val = e.target.value.toLowerCase();
-  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val)).slice(0,10);
+  const val = e.target.value;
+
+  // أول كتابة
+  if (val.length === 1) {
+    setVideo("char2.mp4");
+  }
+
+  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val.toLowerCase())).slice(0,10);
   showSuggestions(suggestions);
 });
 
