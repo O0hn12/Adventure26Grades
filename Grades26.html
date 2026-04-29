@@ -102,28 +102,35 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
-  background: #fff;
-  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   min-width: 300px;
 }
 
 .table-report th {
-  background: linear-gradient(45deg,#2196F3,#64B5F6);
+  background: linear-gradient(45deg, #2E7D32, #66BB6A);
   color: white;
-  padding: 10px;
+  padding: 12px;
   text-align: center;
+  font-size: 15px;
 }
 
 .table-report td {
-  padding: 10px;
+  padding: 12px;
   text-align: center;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  color: #1f1f1f;
+  font-size: 14px;
 }
 
 .table-report tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: rgba(0,0,0,0.03);
 }
 
 #studentGradesDisplay {
@@ -329,7 +336,7 @@ body {
   <!-- مربع عرض الدرجات -->
   <section id="gradesSection">
   <div class="top-character">
-  <video autoplay muted loop id="characterVideo">
+  <video autoplay muted loop playsinline preload="metadata" id="characterVideo">
     <source src="videos/char1.mp4" type="video/mp4">
   </video>
 </div>
@@ -378,6 +385,17 @@ body {
 
     function renderGrades(data) {
   let html = `
+    <div style="
+      text-align:center;
+      font-size:18px;
+      font-weight:bold;
+      margin:10px 0;
+      color:#ffffff;
+      text-shadow:0 2px 4px rgba(0,0,0,0.6);
+    ">
+      👤 ${data.name || "المغامر"}
+    </div>
+
     <table class='table-report'>
       <tr><th>البند</th><th>القيمة</th></tr>
       <tr><td>الحضور</td><td>${data.attendance}</td></tr>
@@ -396,19 +414,16 @@ body {
     const videos = ["char1.mp4","char2.mp4","char3.mp4"];
 let i = 0;
 
-setInterval(() => {
-  const video = document.getElementById("characterVideo");
-  if (!video) return;
+const video = document.getElementById("characterVideo");
 
-  i = (i + 1) % videos.length;
-
-  // تغيير المصدر مباشرة بدون load()
-  video.src = "videos/" + videos[i];
-
-  // تشغيل سلس
-  video.play().catch(() => {});
-}, 10000);
-
+if (window.innerWidth > 600) {
+  setInterval(() => {
+    i = (i + 1) % videos.length;
+    video.src = "videos/" + videos[i];
+    video.play().catch(()=>{});
+  }, 10000);
+}
+    
   document.getElementById("startBtn").addEventListener("click", ()=>{
   document.getElementById("welcomePage").classList.add("hidden");
   document.getElementById("gradesSection").style.display = "block";
