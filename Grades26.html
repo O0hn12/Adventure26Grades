@@ -82,28 +82,34 @@
   #gradesSection, #welcomePage {
     width: 95%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 25px;
   }
 
   .class-btn {
-    font-size: 22px;
-    padding: 14px 24px;
-  }
-
-  #gradeNameInput, #showGradesBtn {
-    font-size: 18px;
-    padding: 14px;
-  }
-
-  #welcomePage h1 {
-    font-size: 28px;
-  }
-
-  #welcomePage button {
-    font-size: 20px;
-    padding: 18px 28px;
-  }
+  font-size: 24px;   /* أكبر */
+  padding: 16px 26px;
+  margin: 12px;
 }
+
+#gradeNameInput, #showGradesBtn {
+  font-size: 20px;
+  padding: 16px;
+}
+
+#welcomePage h1 {
+  font-size: 32px;
+}
+
+#welcomePage button {
+  font-size: 22px;
+  padding: 20px 30px;
+}
+
+.table-report th, .table-report td {
+  font-size: 18px;
+  padding: 10px;
+}
+  
 
   .input-box, #showGradesBtn {
     font-size: 14px;
@@ -228,7 +234,7 @@
   <button class="class-btn">6ب</button>
 </div>
     <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
-<div id="suggestionsBox"></div>
+    <div id="suggestionsBox"></div>
     <button id="showGradesBtn">📋 عرض الدرجات</button>
     <div id="studentGradesDisplay"></div>
   </section>
@@ -239,10 +245,11 @@
   </video>
 
   <script>
+    const API_KEY = "123456";
     const scriptURL = "https://heroes-26-system.johnmamdouh777.workers.dev/";
 
     document.getElementById("showGradesBtn").addEventListener("click", () => {
-  const cls = selectedClass; // بدل gradeClass
+  const cls = document.getElementById("gradeClass").value;
   const name = document.getElementById("gradeNameInput").value;
 
   fetch(`${scriptURL}?action=getStudentGrades&class=${cls}&name=${name}`)
@@ -281,19 +288,50 @@
 
     let studentNames = [];
 
-function loadNames(cls){
-  fetch(`${scriptURL}?action=getNames&class=${cls}`)
-    .then(res=>res.json())
-    .then(data=>{
-      studentNames = data.names;
-    });
+function showSuggestions(list){
+  const box = document.getElementById("suggestionsBox");
+  box.innerHTML = "";
+  list.forEach(name=>{
+    const div = document.createElement("div");
+    div.textContent = name;
+    div.onclick = ()=>{
+      document.getElementById("gradeNameInput").value = name;
+      box.innerHTML = "";
+    };
+    box.appendChild(div);
+  });
 }
 
-document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
-  const val = e.target.value.toLowerCase();
-  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val));
-  showSuggestions(suggestions);
+// ✅ تغيير الفرقة
+document.getElementById("classSelect").addEventListener("change", function(){
+  currentClass = this.value;
+  loadNames(this.value); // 🔥 تحميل الأسماء
 });
+
+// ✅ اقتراحات سريعة (LOCAL)
+document.getElementById("nameInput").addEventListener("input", function(){
+  const value = this.value.trim().toLowerCase();
+  const suggestionsBox = document.getElementById("nameSuggestions");
+  suggestionsBox.innerHTML = "";
+
+  if(!value || allNames.length === 0) return;
+
+  const filtered = allNames.filter(n => n.toLowerCase().includes(value)).slice(0,10);
+
+  filtered.forEach(name=>{
+    const div = document.createElement("div");
+    div.textContent = name;
+    div.style.padding="8px";
+    div.style.cursor="pointer";
+    div.onclick=()=>{
+      document.getElementById("nameInput").value=name;
+      suggestionsBox.innerHTML="";
+    };
+    suggestionsBox.appendChild(div);
+  });
+});
+
+    
 
 function showSuggestions(list){
   const box = document.getElementById("suggestionsBox");
