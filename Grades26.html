@@ -52,13 +52,13 @@ body {
 /* ================= VIDEO (FIXED PROBLEM) ================= */
 #characterVideo {
   position: fixed;
-  top: 10px;
-  right: 10px;
-  width: 70px;
+  top: 8px;
+  right: 8px;
+  width: 60px;
   height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   z-index: 999;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
     
 /* ================= TABLE ================= */
@@ -128,6 +128,14 @@ body {
   color: white;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+    #welcomeCharacter {
+  width: 90px;
+  height: auto;
+  max-width: 30vw;
+  border-radius: 12px;
+  margin-bottom: 15px;
 }
 
 /* ================= CLASS BUTTONS ================= */
@@ -220,11 +228,16 @@ body {
     padding: 10px;
   }
 
+  #welcomeCharacter {
+    width: 70px;
+    max-width: 25vw;
+  }
+
   #characterVideo {
-  width: 55px;
-  top: 8px;
-  right: 8px;
-}
+    width: 50px;
+    top: 6px;
+    right: 6px;
+  }
 
   #classChoices {
     display: flex;
