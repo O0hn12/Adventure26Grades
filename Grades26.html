@@ -24,20 +24,12 @@ body {
 
 /* ================= SECTION ================= */
 #gradesSection {
-  position: fixed;
-  inset: 0;
-  display: none;
-
-  overflow-y: auto;
+  position: relative;   /* بدل fixed */
+  width: 90%;
+  margin: 0 auto;       /* يخلي المحتوى في النص */
   padding: 15px;
-
+  display: none;        /* يبان بس بعد الضغط */
   text-align: center;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
 }
 
 /* ================= INPUT & BUTTON ================= */
@@ -222,8 +214,9 @@ body {
 @media (max-width: 600px) {
 
   #gradesSection {
-    width: 90%;
-    padding: 15px;
+    width: 95%;
+    margin: 20px auto;
+    padding: 20px;
   }
 
   #welcomePage h1 {
