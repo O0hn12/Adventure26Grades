@@ -79,11 +79,25 @@
     }
     /* للشاشات الصغيرة (موبايل) */
 @media (max-width: 600px) {
-  #gradesSection {
-    max-width: 95%;   /* ياخد تقريبًا عرض الشاشة كله */
-    margin: 20px auto;
+  #gradesSection, #welcomePage {
+    width: 95%;
+    margin: 0 auto;
     padding: 15px;
   }
+
+  .class-btn {
+    font-size: 16px;
+    padding: 10px 18px;
+  }
+
+  #gradeNameInput {
+    font-size: 14px;
+  }
+
+  #suggestionsBox {
+    max-height: 120px;
+  }
+}
 
   .input-box, #showGradesBtn {
     font-size: 14px;
@@ -142,21 +156,47 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
     .class-btn {
-  background: linear-gradient(45deg, #FFEB3B, #FFC107);
+  background: linear-gradient(45deg, #FFD54F, #FFB300);
   color: #333;
   font-weight: bold;
   border: none;
   border-radius: 50px;
-  padding: 12px 20px;
+  padding: 14px 22px;
   margin: 8px;
   font-size: 18px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .class-btn:hover {
   transform: scale(1.1);
+}
+
+.class-btn.selected {
+  background: linear-gradient(45deg, #4CAF50, #81C784);
+  color: white;
+  box-shadow: 0 0 15px rgba(76,175,80,0.6);
+}
+    #suggestionsBox {
+  position: absolute;
+  background: rgba(255,255,255,0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+#suggestionsBox div {
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#suggestionsBox div:hover {
+  background: #E3F2FD;
 }
   </style>
 </head>
@@ -251,7 +291,23 @@ document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
 function showSuggestions(list){
   const box = document.getElementById("suggestionsBox");
   box.innerHTML = list.map(n=>`<div>${n}</div>`).join("");
+  box.querySelectorAll("div").forEach(div=>{
+    div.addEventListener("click", ()=>{
+      document.getElementById("gradeNameInput").value = div.textContent;
+      box.innerHTML = "";
+    });
+  });
 }
+    
+    const buttons = document.querySelectorAll(".class-btn");
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    buttons.forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+    selectedClass = btn.textContent;
+    loadNames(selectedClass); // تحميل أسماء الطلبة للفرقة دي
+  });
+});
   </script>
 </body>
 </html>
