@@ -24,11 +24,21 @@ body {
 
 /* ================= SECTION ================= */
 #gradesSection {
-  position: relative;   /* بدل fixed */
-  width: 90%;
-  margin: 0 auto;       /* يخلي المحتوى في النص */
+  position: fixed;
+  inset: 0;
+  display: none;
+
+  overflow-y: auto;
+
   padding: 15px;
-  display: none;        /* يبان بس بعد الضغط */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 12px;
+
   text-align: center;
 }
 
@@ -272,6 +282,15 @@ body {
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+
+
+    .top-character,
+.character-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 </style>
 </head>
