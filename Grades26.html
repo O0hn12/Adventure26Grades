@@ -105,22 +105,32 @@
 .table-report {
   min-width: 300px;
 }
+    #welcomePage {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 1s ease;
+}
+
+#welcomePage.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
   </style>
 </head>
 <body>
-
   <!-- مربع عرض الدرجات -->
   <section id="gradesSection">
     <h2>📊 درجات الطالب</h2>
-    <select id="gradeClass" class="input-box">
-      <option value="">-- اختر الفرقة --</option>
-      <option value="1ب">1ب</option>
-      <option value="2ب">2ب</option>
-      <option value="3ب">3ب</option>
-      <option value="4ب">4ب</option>
-      <option value="5ب">5ب</option>
-      <option value="6ب">6ب</option>
-    </select>
+    <div id="classChoices">
+  <button class="class-btn">1ب</button>
+  <button class="class-btn">2ب</button>
+  <button class="class-btn">3ب</button>
+</div>
     <input type="text" id="gradeNameInput" class="input-box" placeholder="اكتب الاسم">
     <button id="showGradesBtn">📋 عرض الدرجات</button>
     <div id="studentGradesDisplay"></div>
@@ -166,6 +176,32 @@
       video.load();
       i = (i+1) % videos.length;
     }, 10000); // كل 10 ثواني
+
+    document.getElementById("startBtn").addEventListener("click", ()=>{
+  document.getElementById("welcomePage").classList.add("hidden");
+  document.getElementById("gradesSection").style.display = "block";
+});
+
+    let studentNames = [];
+
+function loadNames(cls){
+  fetch(`${scriptURL}?action=getNames&class=${cls}`)
+    .then(res=>res.json())
+    .then(data=>{
+      studentNames = data.names;
+    });
+}
+
+document.getElementById("gradeNameInput").addEventListener("input", (e)=>{
+  const val = e.target.value.toLowerCase();
+  const suggestions = studentNames.filter(n=>n.toLowerCase().includes(val));
+  showSuggestions(suggestions);
+});
+
+function showSuggestions(list){
+  const box = document.getElementById("suggestionsBox");
+  box.innerHTML = list.map(n=>`<div>${n}</div>`).join("");
+}
   </script>
 </body>
 </html>
