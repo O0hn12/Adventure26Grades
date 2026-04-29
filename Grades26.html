@@ -309,7 +309,7 @@ async function getPoints() {
 
   try {
     const res = await fetch(
-      apiURL + `?action=getStudentGrades&sheet=Grades&class=${selectedClass}&name=${encodeURIComponent(name)}`
+  scriptURL + `?action=getStudentGrades&sheet=Grades&class=${selectedClass}&name=${encodeURIComponent(name)}`
     );
 
     const data = await res.json();
